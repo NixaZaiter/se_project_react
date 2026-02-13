@@ -9,16 +9,23 @@ function Header() {
     <>
       <div className="header">
         <div className="header__container">
-          <img className="header__logo" src="./src/assets/Logo.svg" alt="" />
+          <img
+            className="header__logo"
+            src="./src/assets/Logo.svg"
+            alt="WTWR logo"
+          />
           <p className="header__local-time">
-            {currentDate}
-            {currentLocation}
+            {currentDate}, {currentLocation}
           </p>
         </div>
         <div className="header__container">
           <button className="header__btn">+ Add clothes</button>
-          <p className="header__user-name"></p>
-          <img src="" alt="" className="header__avatar" />
+          <p className="header__user-name">Terrence Tegegne</p>
+          <img
+            src="./src/assets/avatar.png"
+            alt="Avatar"
+            className="header__avatar"
+          />
         </div>
       </div>
     </>

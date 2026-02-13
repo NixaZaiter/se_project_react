@@ -20,9 +20,24 @@
   margin: 0;
 }
 
+.header__user-name {
+  margin: 0 0 0 20px;
+  line-height: 100%;
+}
+
 .header__btn {
   border: 0;
   background: none;
   padding: 0;
   max-height: 24px;
+  font-weight: 700;
+}
+
+.header__btn:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.header__avatar {
+  margin-left: 12px;
 }

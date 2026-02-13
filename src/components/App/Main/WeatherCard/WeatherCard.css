@@ -1,0 +1,26 @@
+.weather {
+  display: flex;
+  width: 100%;
+  margin: 0 0 40px;
+  position: relative;
+  align-items: center;
+}
+
+.weather__banner {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  object-position: right;
+  border-radius: 12px;
+}
+
+.weather__temperature {
+  position: absolute;
+  margin: 0;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 700;
+  top: 20px;
+  left: 16px;
+  color: white;
+}
