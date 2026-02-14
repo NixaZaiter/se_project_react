@@ -1,0 +1,15 @@
+import "./ItemCard.css";
+
+function ItemCard({ item }) {
+  return (
+    <div className="card">
+      <div className="card__container">
+        <button className="card__btn">
+          <h2 className="card__label">{item.name}</h2>
+          <img src={item.link} alt={item.name} className="card__img" />
+        </button>
+      </div>
+    </div>
+  );
+}
+export default ItemCard;

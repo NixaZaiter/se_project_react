@@ -1,17 +1,19 @@
+import { useState } from "react";
+
 import "./App.css";
-import Header from "./Header/Header";
-import Main from "./Main/Main";
-import Footer from "./Footer/Footer";
-// import defaultClothingItems from "../../utils/clothingItems";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
+
 function App() {
+  const [weatherData, setWeatherData] = useState({ type: "hot" });
+
   return (
-    <>
-      <div className="app">
-        <Header />
-        <Main />
-        <Footer />
-      </div>
-    </>
+    <div className="page">
+      <Header />
+      <Main weatherData={weatherData} />
+      <Footer />
+    </div>
   );
 }
 

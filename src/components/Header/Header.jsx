@@ -7,7 +7,7 @@ function Header() {
   const currentLocation = "";
   return (
     <>
-      <div className="header">
+      <section className="header">
         <div className="header__container">
           <img
             className="header__logo"
@@ -27,7 +27,7 @@ function Header() {
             className="header__avatar"
           />
         </div>
-      </div>
+      </section>
     </>
   );
 }

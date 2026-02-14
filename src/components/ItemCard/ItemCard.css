@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+}
+
+.card__container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  list-style-type: none;
+  max-width: 325px;
+  max-height: 328px;
+  border: 1px solid #0000004d;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.card__label {
+  display: flex;
+  position: absolute;
+  margin: 0;
+  top: 15px;
+  left: 50%;
+  transform: translatex(-50%);
+}
+
+.card__btn {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card__img {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,48 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 40px;
+  flex: 1;
+}
+
+.cards {
+  box-sizing: border-box;
+}
+
+.cards__text {
+  margin: 0 0 34px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+}
+
+.cards__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  justify-self: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+@media screen and (max-width: 1439px) {
+  .cards__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .cards__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cards__list {
+    justify-self: center;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
