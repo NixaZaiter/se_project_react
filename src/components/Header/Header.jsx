@@ -1,5 +1,5 @@
 import "./Header.css";
-function Header() {
+function Header({ handleAddClick }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -19,7 +19,13 @@ function Header() {
           </p>
         </div>
         <div className="header__container">
-          <button className="header__btn">+ Add clothes</button>
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            + Add clothes
+          </button>
           <p className="header__user-name">Terrence Tegegne</p>
           <img
             src="./src/assets/avatar.png"
