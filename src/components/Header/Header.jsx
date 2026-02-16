@@ -1,10 +1,9 @@
 import "./Header.css";
-function Header({ handleAddClick }) {
+function Header({ handleAddClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
-  const currentLocation = "";
   return (
     <>
       <section className="header">
@@ -15,7 +14,7 @@ function Header({ handleAddClick }) {
             alt="WTWR logo"
           />
           <p className="header__local-time">
-            {currentDate}, {currentLocation}
+            {currentDate}, {weatherData.city}
           </p>
         </div>
         <div className="header__container">

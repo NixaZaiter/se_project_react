@@ -1,8 +1,30 @@
-# React + Vite
+# Project "WTWR" (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+- Description & Fundamentals
+- Technology & Techniques
+- GitHub Pages
+- Notes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### **Description & Fundamentals**
+
+    The page gives a recommendation on what to wear based on the temperature at your current location as well as providing the weather and temperature using an API.
+    Data for the API is from https://openweathermap.org/.
+
+### **Technology & Techniques**
+
+    Learning to use React was the forefront of this assignment and as such, much of the code is made using React.
+    This includes using Hooks, functional components and Vite for getting the overall package started.
+
+### **GitHub Pages**
+
+https://nixazaiter.github.io/se_project_react/
+
+### **Notes**
+
+    Still not sure which file structure is best for styles, nor was I sure if importing them into the index.css was a better idea or just to import them into their matching components.
+    Currently they are just with matching components as was seen in many of thelearning examples.
+
+- Possible features:
+  - Cleaned up header for mobile devices

@@ -6,9 +6,15 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+import { coordinates, apiKey } from "../../utils/constants";
 
 function App() {
-  const [weatherData, setWeatherData] = useState({ type: "hot" });
+  const [weatherData, setWeatherData] = useState({
+    type: "",
+    temp: { F: 999 },
+    banner: "",
+  });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
   const [selectedRadioOption, setSelectedRadioOption] = useState("hot");
@@ -30,9 +36,30 @@ function App() {
     setActiveModal("");
   };
 
+  useEffect(() => {
+    const handleKeydown = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+    document.addEventListener("keydown", handleKeydown);
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, [activeModal]);
+
+  useEffect(() => {
+    getWeather(coordinates, apiKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="page">
-      <Header handleAddClick={handleAddClick} />
+      <Header handleAddClick={handleAddClick} weatherData={weatherData} />
       <Main weatherData={weatherData} handleCardClick={handleCardClick} />
       <Footer />
       <ModalWithForm
