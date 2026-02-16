@@ -1,9 +1,30 @@
-# WTWR (What to Wear?)
+# Project "WTWR" (React)
 
-## About the project
+## Overview
 
-The idea of the application is pretty simple - we make a call to an API, which then responds with the daily weather forecast. We collect the weather data, process it, and then based on the forecast, we recommend suitable clothing to the user.
+- Description & Fundamentals
+- Technology & Techniques
+- GitHub Pages
+- Notes
 
-## Links
+### **Description & Fundamentals**
 
-- [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
+    The page gives a recommendation on what to wear based on the temperature at your current location as well as providing the weather and temperature using an API.
+    Data for the API is from https://openweathermap.org/.
+
+### **Technology & Techniques**
+
+    Learning to use React was the forefront of this assignment and as such, much of the code is made using React.
+    This includes using Hooks, functional components and Vite for getting the overall package started.
+
+### **GitHub Pages**
+
+https://nixazaiter.github.io/se_project_react/
+
+### **Notes**
+
+    Still not sure which file structure is best for styles, nor was I sure if importing them into the index.css was a better idea or just to import them into their matching components.
+    Currently they are just with matching components as was seen in many of thelearning examples.
+
+- Possible features:
+  - Cleaned up header for mobile devices
