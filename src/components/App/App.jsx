@@ -43,6 +43,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!activeModal) return;
+
     const handleKeydown = (e) => {
       if (e.key === "Escape") {
         handleCloseModal();
