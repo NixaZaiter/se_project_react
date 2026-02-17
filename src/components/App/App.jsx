@@ -8,6 +8,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, apiKey } from "../../utils/constants";
+import { defaultClothingItems } from "../../utils/clothingItems";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -18,6 +19,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
   const [selectedRadioOption, setSelectedRadioOption] = useState("hot");
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
 
   const handleRadioOptionChange = (e) => {
     setSelectedRadioOption(e.target.value);
@@ -35,6 +37,10 @@ function App() {
   const handleCloseModal = () => {
     setActiveModal("");
   };
+
+  useEffect(() => {
+    setClothingItems(defaultClothingItems);
+  }, []);
 
   useEffect(() => {
     const handleKeydown = (e) => {
@@ -60,12 +66,17 @@ function App() {
   return (
     <div className="page">
       <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-      <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+      <Main
+        weatherData={weatherData}
+        handleCardClick={handleCardClick}
+        clothingItems={clothingItems}
+      />
       <Footer />
       <ModalWithForm
         buttonText={"Add garment"}
         title={"New garment"}
-        isOpen={activeModal}
+        isOpen={activeModal === "add-garment"}
+        name="add-garment"
         onClose={handleCloseModal}
       >
         <div className="modal__field">
@@ -149,7 +160,7 @@ function App() {
       </ModalWithForm>
       <ItemModal
         card={selectedCard}
-        isOpen={activeModal}
+        isOpen={activeModal === "preview-card"}
         onClose={handleCloseModal}
       />
     </div>

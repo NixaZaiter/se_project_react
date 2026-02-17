@@ -2,10 +2,7 @@ import "./ItemModal.css";
 import closeIcon from "../../assets/close-icon-dark.svg";
 function ItemModal({ isOpen, card, onClose }) {
   return (
-    <div
-      onClick={onClose}
-      className={`modal ${isOpen === "preview-card" ? "modal_is-open" : ""}`}
-    >
+    <div onClick={onClose} className={`modal ${isOpen ? "modal_is-open" : ""}`}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="modal__container modal__container_type_img"
