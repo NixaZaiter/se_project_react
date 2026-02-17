@@ -1,11 +1,11 @@
 import "./ModalWithForm.css";
 import closeIcon from "../../assets/close-icon-dark.svg";
 
-function ModalWithForm({ children, buttonText, title, isOpen, onClose }) {
+function ModalWithForm({ children, buttonText, title, isOpen, name, onClose }) {
   return (
     <div
       onClick={onClose}
-      className={`modal ${isOpen === "add-garment" ? "modal_is-open" : ""}`}
+      className={`modal modal_type_${name} ${isOpen ? "modal_is-open" : ""}`}
     >
       <div onClick={(e) => e.stopPropagation()} className="modal__container">
         <h2 className="modal__title">{title}</h2>
