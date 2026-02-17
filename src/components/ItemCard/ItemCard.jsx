@@ -7,15 +7,13 @@ function ItemCard({ item, onCardClick }) {
 
   return (
     <div className="card__container">
-      <button className="card__btn">
-        <h2 className="card__label">{item.name}</h2>
-        <img
-          onClick={handleCardClick}
-          src={item.link}
-          alt={item.name}
-          className="card__img"
-        />
-      </button>
+      <h2 className="card__label">{item.name}</h2>
+      <img
+        onClick={handleCardClick}
+        src={item.link}
+        alt={item.name}
+        className="card__img"
+      />
     </div>
   );
 }
