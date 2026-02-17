@@ -18,8 +18,8 @@ function App() {
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
-  const [selectedRadioOption, setSelectedRadioOption] = useState("hot");
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [selectedRadioOption, setSelectedRadioOption] = useState("");
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleRadioOptionChange = (e) => {
     setSelectedRadioOption(e.target.value);

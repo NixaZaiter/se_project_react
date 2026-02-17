@@ -17,6 +17,11 @@
 .card__label {
   display: flex;
   position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 2px 12px;
   margin: 0;
   top: 15px;
   left: 50%;
