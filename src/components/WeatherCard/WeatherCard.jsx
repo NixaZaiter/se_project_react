@@ -3,8 +3,11 @@ import {
   weatherOptions,
   defaultWeatherOptions,
 } from "../../utils/weatherItems.js";
+import { useContext } from "react";
+import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext.js";
 
 function WeatherCard({ weatherData }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const filteredOptions = weatherOptions.filter((option) => {
     return (
       option.day === weatherData.isDay &&
@@ -27,7 +30,9 @@ function WeatherCard({ weatherData }) {
         alt={weatherOption?.condition}
       />
       <p className="weather-card__temperature">
-        {Math.ceil(weatherData.temp.fahrenheit)}°F
+        {currentTemperatureUnit === "F"
+          ? `${Math.ceil(weatherData.temp.fahrenheit)} °F`
+          : `${Math.ceil(weatherData.temp.celsius)} °C`}
       </p>
     </section>
   );

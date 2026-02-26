@@ -1,0 +1,72 @@
+.toggle-switch {
+  display: flex;
+  cursor: pointer;
+  min-width: 56px;
+  height: 28px;
+  background: white;
+  border: 2px solid #7e7e7e;
+  border-radius: 20px;
+  position: relative;
+  transition: 0.2s;
+  box-sizing: border-box;
+  margin-right: 20px;
+}
+
+.toggle-switch__checkbox {
+  opacity: 0;
+}
+
+.toggle-switch__circle {
+  position: absolute;
+  align-self: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 20px;
+  transition: 0.2s;
+  background-color: #000;
+  left: -1px;
+}
+
+.toggle-switch__temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0;
+  position: absolute;
+  color: #00000080;
+  z-index: 1;
+}
+
+.toggle-switch__temperature_farenheit {
+  left: 0;
+  color: white;
+}
+
+.toggle-switch__temperature_celcius {
+  right: 0;
+  color: #00000080;
+}
+
+.toggle-switch:hover {
+  border: #000 solid 2px;
+  .toggle-switch__circle {
+    width: 30px;
+  }
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__circle {
+  left: calc(100% + 1px);
+  transform: translateX(-100%);
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_farenheit {
+  color: #00000080;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_celcius {
+  color: white;
+}
