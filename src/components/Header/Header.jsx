@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
-function Header({ handleAddClick, weatherData }) {
+import { ToggleSwitch } from "../index";
+
+export default function Header({ handleAddClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -11,7 +13,9 @@ function Header({ handleAddClick, weatherData }) {
   return (
     <header className="header">
       <div className="header__container header__container_logo">
-        <img className="header__logo" src={logo} alt="WTWR logo" />
+        <Link to="/">
+          <img className="header__logo" src={logo} alt="WTWR logo" />
+        </Link>
         <p className="header__local-time">
           {currentDate}, {weatherData.city}
         </p>
@@ -25,12 +29,13 @@ function Header({ handleAddClick, weatherData }) {
         >
           + Add clothes
         </button>
-        <div className="header__container header__container_profile">
-          <p className="header__user-name">Terrence Tegegne</p>
-          <img src={avatar} alt="Avatar" className="header__avatar" />
-        </div>
+        <Link to="/profile">
+          <div className="header__container header__container_profile">
+            <p className="header__user-name">Terrence Tegegne</p>
+            <img src={avatar} alt="Avatar" className="header__avatar" />
+          </div>
+        </Link>
       </div>
     </header>
   );
 }
-export default Header;

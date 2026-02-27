@@ -1,5 +1,6 @@
 import "./Footer.css";
-function Footer() {
+
+export default function Footer() {
   return (
     <footer className="footer">
       <p className="footer__text">Developed by Ian Johnson</p>
@@ -7,4 +8,3 @@ function Footer() {
     </footer>
   );
 }
-export default Footer;

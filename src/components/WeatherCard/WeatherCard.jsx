@@ -1,12 +1,11 @@
-import "./WeatherCard.css";
-import {
-  weatherOptions,
-  defaultWeatherOptions,
-} from "../../utils/weatherItems.js";
 import { useContext } from "react";
-import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext.js";
+import "./WeatherCard.css";
 
-function WeatherCard({ weatherData }) {
+import { weatherOptions, defaultWeatherOptions } from "../../utils/index.js";
+
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
+
+export default function WeatherCard({ weatherData }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const filteredOptions = weatherOptions.filter((option) => {
     return (
@@ -37,4 +36,3 @@ function WeatherCard({ weatherData }) {
     </section>
   );
 }
-export default WeatherCard;

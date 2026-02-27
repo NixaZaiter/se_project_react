@@ -1,6 +1,7 @@
 import "./ItemModal.css";
 import closeIcon from "../../assets/close-icon-dark.svg";
-function ItemModal({ isOpen, card, onClose }) {
+
+export default function ItemModal({ isOpen, card, onClose }) {
   return (
     <div onClick={onClose} className={`modal ${isOpen ? "modal_is-open" : ""}`}>
       <div
@@ -19,4 +20,3 @@ function ItemModal({ isOpen, card, onClose }) {
     </div>
   );
 }
-export default ItemModal;

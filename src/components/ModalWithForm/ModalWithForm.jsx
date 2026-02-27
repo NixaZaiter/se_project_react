@@ -1,7 +1,14 @@
 import "./ModalWithForm.css";
 import closeIcon from "../../assets/close-icon-dark.svg";
 
-function ModalWithForm({ children, buttonText, title, isOpen, name, onClose }) {
+export default function ModalWithForm({
+  children,
+  buttonText,
+  title,
+  isOpen,
+  name,
+  onClose,
+}) {
   return (
     <div
       onClick={onClose}
@@ -30,5 +37,3 @@ function ModalWithForm({ children, buttonText, title, isOpen, name, onClose }) {
     </div>
   );
 }
-
-export default ModalWithForm;
