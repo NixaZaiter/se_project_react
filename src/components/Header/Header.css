@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
 }
+
 .header__container_nav {
   flex-wrap: wrap-reverse;
 }
@@ -43,6 +44,22 @@
 
 .header__avatar {
   margin-left: 12px;
+  height: 40px;
+  width: 40px;
+  box-sizing: border-box;
+}
+
+.header__avatar_none {
+  display: flex;
+  background-color: #00000033;
+  border: 1px solid #00000080;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  justify-content: center;
+  align-items: center;
+  color: #000;
 }
 
 @media screen and (max-width: 1023px) {

@@ -7,6 +7,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 
 export default function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
   return (
     <main className="main">
       <WeatherCard weatherData={weatherData} />
@@ -20,14 +21,14 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
         </p>
         <ul className="cards__list">
           {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item) => {
+            .filter((item) => item.weather === weatherData.type)
+            .map((filteredItem) => {
               return (
-                <li className="card" key={item._id}>
-                  <ItemCard item={item} onCardClick={handleCardClick} />
-                </li>
+                <ItemCard
+                  key={filteredItem._id}
+                  item={filteredItem}
+                  onCardClick={handleCardClick}
+                />
               );
             })}
         </ul>

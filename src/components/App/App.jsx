@@ -16,12 +16,17 @@ import {
   filterWeatherData,
   coordinates,
   apiKey,
-  defaultClothingItems,
+  getClothes,
+  addClothing,
 } from "../../utils/index";
 
-// import { useForm } from "../../hooks/useForm";
-
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+
+// TODO:
+// Fix item card styles for irregular images
+// Add deletion functionality
+// (Maybe) Add confirmation modal
+// Add reset form on submit code
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -52,11 +57,39 @@ function App() {
       ? setCurrentTemperatureUnit("C")
       : setCurrentTemperatureUnit("F");
   };
+  // Add Clothes
+  const onAddItem = (data) => {
+    addClothing(data)
+      .then((data) => {
+        setClothingItems([...clothingItems, data]);
+      })
+      .catch(console.error);
+  };
 
+  // Get Clothes
   useEffect(() => {
-    setClothingItems(defaultClothingItems);
+    getClothes()
+      .then((data) => {
+        const processedData = data.map((item) => {
+          const { imageUrl, ...rest } = item;
+          return { link: imageUrl, ...rest };
+        });
+        setClothingItems(processedData);
+      })
+      .catch(console.error);
   }, []);
 
+  // Get Weather
+  useEffect(() => {
+    getWeather(coordinates, apiKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
+
+  // Escape to close
   useEffect(() => {
     if (!activeModal) return;
 
@@ -70,15 +103,6 @@ function App() {
       document.removeEventListener("keydown", handleKeydown);
     };
   }, [activeModal]);
-
-  useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <div className="page">
@@ -97,12 +121,23 @@ function App() {
               />
             }
           />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                weatherData={weatherData}
+                handleCardClick={handleCardClick}
+                clothingItems={clothingItems}
+                handleAddClick={handleAddClick}
+              />
+            }
+          />
         </Routes>
 
         <Footer />
         <AddItemModal
           isOpen={activeModal === "add-garment"}
+          onAddItem={onAddItem}
           onClose={handleCloseModal}
         ></AddItemModal>
 

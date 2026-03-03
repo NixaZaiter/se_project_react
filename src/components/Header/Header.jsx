@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
+import avatarDefault from "../../assets/avatar.svg";
 
 import { ToggleSwitch } from "../index";
 
 export default function Header({ handleAddClick, weatherData }) {
+  const username = "Terrence Tegegne";
+  const avatar = avatarDefault;
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -31,8 +33,18 @@ export default function Header({ handleAddClick, weatherData }) {
         </button>
         <Link to="/profile">
           <div className="header__container header__container_profile">
-            <p className="header__user-name">Terrence Tegegne</p>
-            <img src={avatar} alt="Avatar" className="header__avatar" />
+            <div className="header__user-name">{username}</div>
+            {avatar ? (
+              <img
+                src={avatar || avatarDefault}
+                alt="Avatar"
+                className="header__avatar"
+              />
+            ) : (
+              <span className="header__avatar header__avatar_none">
+                {username?.toUpperCase().charAt(0) || ""}
+              </span>
+            )}
           </div>
         </Link>
       </div>

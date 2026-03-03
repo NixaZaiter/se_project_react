@@ -134,6 +134,7 @@
 
 .modal__img {
   object-fit: fill;
+  max-height: 498px;
 }
 
 .modal__footer {
@@ -155,4 +156,22 @@
 
 .modal__weather {
   margin: 0;
+}
+
+.modal__delete-btn {
+  position: absolute;
+  right: 33.56px;
+  bottom: 73.78px;
+  padding: 0;
+  height: fit-content;
+  width: fit-content;
+  color: #ff4d00;
+  border: none;
+  background: none;
+  transition: 0.2s;
+}
+
+.modal__delete-btn:hover {
+  cursor: pointer;
+  color: #ff4d0099;
 }

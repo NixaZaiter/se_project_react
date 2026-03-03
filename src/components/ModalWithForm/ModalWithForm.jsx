@@ -8,6 +8,7 @@ export default function ModalWithForm({
   isOpen,
   name,
   onClose,
+  onSubmit,
 }) {
   return (
     <div
@@ -20,7 +21,7 @@ export default function ModalWithForm({
           <img src={closeIcon} alt="close icon" />
         </button>
         {/* Form */}
-        <form className="modal__form" noValidate>
+        <form className="modal__form" onSubmit={onSubmit} noValidate>
           {children}
           {/* Save btn */}
           <div className="modal__field">

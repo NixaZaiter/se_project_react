@@ -12,6 +12,7 @@ export default function ItemModal({ isOpen, card, onClose }) {
           <img src={closeIcon} alt="close icon" />
         </button>
         <img src={card.link} alt={card.name} className="modal__img" />
+        <button className="modal__delete-btn">Delete item</button>
         <div className="modal__footer">
           <h2 className="modal__caption">{card.name}</h2>
           <p className="modal__weather">Weather : {card.weather}</p>
