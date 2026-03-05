@@ -19,6 +19,7 @@ export default function ClothesSection({
         <div className="clothes-section__container">
           <ul className="clothes-section__list">
             {clothingItems
+              .toReversed()
               .filter((item) => item.weather === weatherData.type)
               .map((filteredItem) => {
                 return (

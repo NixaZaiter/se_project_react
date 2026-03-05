@@ -101,6 +101,12 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
+    },
+    {
+      "name": "asdf",
+      "link": "https://www.firsttactical.com/cdn/shop/files/142069_083_GH_03.jpg?v=1767891181&width=2000",
+      "weather": "cold",
+      "_id": 17
     }
   ]
 }

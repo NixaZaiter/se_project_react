@@ -21,6 +21,7 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
         </p>
         <ul className="cards__list">
           {clothingItems
+            .toReversed()
             .filter((item) => item.weather === weatherData.type)
             .map((filteredItem) => {
               return (

@@ -13,7 +13,7 @@ export const getClothes = () => {
   });
 };
 
-export const addClothing = ({ name, link, weather }) => {
+export const addClothes = ({ name, link, weather }) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: headers,
@@ -23,7 +23,7 @@ export const addClothing = ({ name, link, weather }) => {
   });
 };
 
-export const removeClothing = (id) => {
+export const removeClothes = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: headers,

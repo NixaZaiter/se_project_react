@@ -7,11 +7,16 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
     weather: "",
   };
 
-  const { values, handleChange } = useForm(defaultValues);
+  const { values, setValues, handleChange } = useForm(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddItem(values);
+    onAddItem(values)
+      .then(() => {
+        setValues(defaultValues);
+        onClose(evt);
+      })
+      .catch(console.error);
   }
 
   return (

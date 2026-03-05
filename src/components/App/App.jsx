@@ -17,16 +17,15 @@ import {
   coordinates,
   apiKey,
   getClothes,
-  addClothing,
+  addClothes,
+  removeClothes,
 } from "../../utils/index";
 
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 // TODO:
-// Fix item card styles for irregular images
-// Add deletion functionality
+
 // (Maybe) Add confirmation modal
-// Add reset form on submit code
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -48,6 +47,19 @@ function App() {
     setActiveModal("add-garment");
   };
 
+  const handleDeleteCard = (selectedCard) => {
+    removeClothes(selectedCard._id)
+      .then(() => {
+        const filteredClothes = clothingItems.filter(
+          (item) => item._id !== selectedCard._id,
+        );
+        setClothingItems(filteredClothes);
+        setSelectedCard({ _id: "" });
+        setActiveModal("");
+      })
+      .catch(console.error);
+  };
+
   const handleCloseModal = () => {
     setActiveModal("");
   };
@@ -57,9 +69,10 @@ function App() {
       ? setCurrentTemperatureUnit("C")
       : setCurrentTemperatureUnit("F");
   };
+
   // Add Clothes
   const onAddItem = (data) => {
-    addClothing(data)
+    return addClothes(data)
       .then((data) => {
         setClothingItems([...clothingItems, data]);
       })
@@ -145,6 +158,9 @@ function App() {
           card={selectedCard}
           isOpen={activeModal === "preview-card"}
           onClose={handleCloseModal}
+          onDelete={handleDeleteCard}
+          clothingItems={clothingItems}
+          setClothingItems={setClothingItems}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>
