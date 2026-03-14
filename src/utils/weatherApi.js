@@ -1,23 +1,20 @@
-function processServerRequest(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Error: ${res.status}`);
-  }
-}
+import { handleServerResponse } from "./index";
 
 export const getWeather = ({ latitude, longitude }, apiKey) => {
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`,
   ).then((res) => {
-    return processServerRequest(res);
+    return handleServerResponse(res);
   });
 };
 
 export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
-  result.temp = { fahrenheit: data.main.temp };
+  result.temp = {
+    fahrenheit: data.main.temp,
+    celsius: Math.round(((data.main.temp - 32) * 5) / 9),
+  };
   result.condition = data.weather[0].main.toLowerCase();
   result.type = getWeatherType(result.temp.fahrenheit);
   result.isDay = isDay(data.sys, Date.now());
@@ -31,7 +28,7 @@ const isDay = ({ sunrise, sunset }, now) => {
 const getWeatherType = (temperature) => {
   if (temperature >= 75) {
     return "hot";
-  } else if (temperature >= 55 && temperature < 75) {
+  } else if (temperature >= 50 && temperature < 75) {
     return "warm";
   } else {
     return "cold";

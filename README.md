@@ -14,12 +14,16 @@
 
 ### **Technology & Techniques**
 
-    Learning to use React was the forefront of this assignment and as such, much of the code is made using React.
-    This includes using Hooks, functional components and Vite for getting the overall package started.
+    Continuing from the previous version, this is still mainly made using React. Navigation into subcomponents has been added to the logo, along with basic, local server interaction. Adding new clothes and seeing the entire list aside from just the recommended apparel is now implemented.
 
 ### **GitHub Pages**
 
 https://nixazaiter.github.io/se_project_react/
+
+## Project Pitch Video
+
+Check out [this video](https://drive.google.com/file/d/1LHHavvPNpLTT0WX09H7gNxmWo_YN2AF7/view?usp=drive_link), where I describe my
+project and some challenges I faced while building it.
 
 ### **Notes**
 
@@ -28,3 +32,4 @@ https://nixazaiter.github.io/se_project_react/
 
 - Possible features:
   - Cleaned up header for mobile devices
+  - Add custom validation

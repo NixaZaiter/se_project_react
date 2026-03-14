@@ -1,10 +1,12 @@
+import { useContext } from "react";
 import "./WeatherCard.css";
-import {
-  weatherOptions,
-  defaultWeatherOptions,
-} from "../../utils/weatherItems.js";
 
-function WeatherCard({ weatherData }) {
+import { weatherOptions, defaultWeatherOptions } from "../../utils/index.js";
+
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
+
+export default function WeatherCard({ weatherData }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const filteredOptions = weatherOptions.filter((option) => {
     return (
       option.day === weatherData.isDay &&
@@ -27,9 +29,10 @@ function WeatherCard({ weatherData }) {
         alt={weatherOption?.condition}
       />
       <p className="weather-card__temperature">
-        {Math.ceil(weatherData.temp.fahrenheit)}°F
+        {currentTemperatureUnit === "F"
+          ? `${Math.ceil(weatherData.temp.fahrenheit)} °F`
+          : `${Math.ceil(weatherData.temp.celsius)} °C`}
       </p>
     </section>
   );
 }
-export default WeatherCard;
