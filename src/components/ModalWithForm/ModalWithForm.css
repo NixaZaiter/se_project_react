@@ -82,6 +82,18 @@
   margin: 0;
 }
 
+.modal__error {
+  visibility: hidden;
+  color: #ff4d00;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.modal__error-visible {
+  visibility: visible;
+  margin-top: 8px;
+}
+
 .modal__label {
   display: flex;
   flex-direction: column;
@@ -124,6 +136,10 @@
   background-color: #0000004d;
 }
 
+.modal__input_type_error {
+  border-color: #ff000099;
+}
+
 .modal__container_type_img {
   display: flex;
   max-width: 498px;
@@ -134,7 +150,7 @@
 
 .modal__img {
   object-fit: fill;
-  max-height: 498px;
+  height: 498px;
 }
 
 .modal__footer {

@@ -21,7 +21,7 @@ export default function ModalWithForm({
           <img src={closeIcon} alt="close icon" />
         </button>
         {/* Form */}
-        <form className="modal__form" onSubmit={onSubmit} noValidate>
+        <form className="modal__form" onSubmit={onSubmit}>
           {children}
           {/* Save btn */}
           <div className="modal__field">

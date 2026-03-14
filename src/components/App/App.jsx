@@ -9,6 +9,7 @@ import {
   Footer,
   ItemModal,
   AddItemModal,
+  ConfirmationModal,
 } from "../index";
 
 import {
@@ -22,10 +23,6 @@ import {
 } from "../../utils/index";
 
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-
-// TODO:
-
-// (Maybe) Add confirmation modal
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -45,6 +42,10 @@ function App() {
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
+  };
+
+  const openConfirmationModal = () => {
+    setActiveModal("confirm-delete");
   };
 
   const handleDeleteCard = (selectedCard) => {
@@ -138,7 +139,6 @@ function App() {
             path="/profile"
             element={
               <Profile
-                weatherData={weatherData}
                 handleCardClick={handleCardClick}
                 clothingItems={clothingItems}
                 handleAddClick={handleAddClick}
@@ -158,9 +158,15 @@ function App() {
           card={selectedCard}
           isOpen={activeModal === "preview-card"}
           onClose={handleCloseModal}
-          onDelete={handleDeleteCard}
+          openConfirmationModal={openConfirmationModal}
           clothingItems={clothingItems}
           setClothingItems={setClothingItems}
+        />
+        <ConfirmationModal
+          isOpen={activeModal === "confirm-delete"}
+          card={selectedCard}
+          onClose={handleCloseModal}
+          onDelete={handleDeleteCard}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>

@@ -11,3 +11,4 @@ export { default as Profile } from "./Profile/Profile";
 export { default as SideBar } from "./SideBar/SideBar";
 export { default as ToggleSwitch } from "./ToggleSwitch/ToggleSwitch";
 export { default as WeatherCard } from "./WeatherCard/WeatherCard";
+export { default as ConfirmationModal } from "./ConfirmationModal/ConfirmationModal";

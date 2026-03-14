@@ -1,9 +1,14 @@
 import "./ItemModal.css";
 import closeIcon from "../../assets/close-icon-dark.svg";
 
-export default function ItemModal({ isOpen, card, onClose, onDelete }) {
-  const handleDelete = () => {
-    onDelete(card);
+export default function ItemModal({
+  isOpen,
+  card,
+  onClose,
+  openConfirmationModal,
+}) {
+  const handleConfirmation = () => {
+    openConfirmationModal(card);
   };
   return (
     <div onClick={onClose} className={`modal ${isOpen ? "modal_is-open" : ""}`}>
@@ -15,7 +20,7 @@ export default function ItemModal({ isOpen, card, onClose, onDelete }) {
           <img src={closeIcon} alt="close icon" />
         </button>
         <img src={card.link} alt={card.name} className="modal__img" />
-        <button onClick={handleDelete} className="modal__delete-btn">
+        <button onClick={handleConfirmation} className="modal__delete-btn">
           Delete item
         </button>
         <div className="modal__footer">

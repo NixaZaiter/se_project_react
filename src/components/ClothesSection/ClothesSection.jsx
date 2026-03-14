@@ -2,7 +2,6 @@ import "./ClothesSection.css";
 import { ItemCard } from "../index";
 
 export default function ClothesSection({
-  weatherData,
   handleCardClick,
   clothingItems,
   onAddClick,
@@ -18,18 +17,15 @@ export default function ClothesSection({
         </div>
         <div className="clothes-section__container">
           <ul className="clothes-section__list">
-            {clothingItems
-              .toReversed()
-              .filter((item) => item.weather === weatherData.type)
-              .map((filteredItem) => {
-                return (
-                  <ItemCard
-                    key={filteredItem._id}
-                    item={filteredItem}
-                    onCardClick={handleCardClick}
-                  />
-                );
-              })}
+            {clothingItems.toReversed().map((item) => {
+              return (
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  onCardClick={handleCardClick}
+                />
+              );
+            })}
           </ul>
         </div>
       </div>
