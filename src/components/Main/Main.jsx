@@ -14,7 +14,7 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
       <section className="cards">
         <p className="cards__text">
           Today is{" "}
-          {currentTemperatureUnit === "F"
+          {currentTemperatureUnit === "fahrenheit"
             ? `${Math.ceil(weatherData.temp.fahrenheit)} °F`
             : `${Math.ceil(weatherData.temp.celsius)} °C `}
           / You may want to wear:

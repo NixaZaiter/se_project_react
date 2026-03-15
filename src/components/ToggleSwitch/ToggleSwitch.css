@@ -53,9 +53,10 @@
 
 .toggle-switch:hover {
   border: #000 solid 2px;
-  .toggle-switch__circle {
-    width: 30px;
-  }
+}
+
+.toggle-switch:hover .toggle-switch__circle {
+  width: 30px;
 }
 
 .toggle-switch__checkbox:checked ~ .toggle-switch__circle {

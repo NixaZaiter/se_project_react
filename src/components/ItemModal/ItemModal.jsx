@@ -19,7 +19,7 @@ export default function ItemModal({
         <button onClick={onClose} type="button" className="modal__close">
           <img src={closeIcon} alt="close icon" />
         </button>
-        <img src={card.link} alt={card.name} className="modal__img" />
+        <img src={card.imageUrl} alt={card.name} className="modal__img" />
         <button onClick={handleConfirmation} className="modal__delete-btn">
           Delete item
         </button>

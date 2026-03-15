@@ -29,7 +29,7 @@ export default function WeatherCard({ weatherData }) {
         alt={weatherOption?.condition}
       />
       <p className="weather-card__temperature">
-        {currentTemperatureUnit === "F"
+        {currentTemperatureUnit === "fahrenheit"
           ? `${Math.ceil(weatherData.temp.fahrenheit)} °F`
           : `${Math.ceil(weatherData.temp.celsius)} °C`}
       </p>

@@ -1,4 +1,4 @@
-import { handleServerResponse } from "./index";
+import { handleServerResponse } from "./constants";
 
 const baseUrl = "http://localhost:3001";
 const headers = {
@@ -13,11 +13,11 @@ export const getClothes = () => {
   });
 };
 
-export const addClothes = ({ name, link, weather }) => {
+export const addClothes = ({ name, imageUrl, weather }) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: headers,
-    body: JSON.stringify({ name, link, weather }),
+    body: JSON.stringify({ name, imageUrl, weather }),
   }).then((res) => {
     return handleServerResponse(res);
   });
