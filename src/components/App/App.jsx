@@ -27,13 +27,14 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
-    temp: { F: 999, C: 999 },
+    temp: { fahrenheit: 999, celsius: 999 },
     banner: "",
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
   const [clothingItems, setClothingItems] = useState([]);
-  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] =
+    useState("fahrenheit");
 
   const handleCardClick = (card) => {
     setActiveModal("preview-card");
@@ -66,9 +67,9 @@ function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    currentTemperatureUnit === "F"
-      ? setCurrentTemperatureUnit("C")
-      : setCurrentTemperatureUnit("F");
+    currentTemperatureUnit === "fahrenheit"
+      ? setCurrentTemperatureUnit("celsius")
+      : setCurrentTemperatureUnit("fahrenheit");
   };
 
   // Add Clothes
@@ -84,11 +85,7 @@ function App() {
   useEffect(() => {
     getClothes()
       .then((data) => {
-        const processedData = data.map((item) => {
-          const { imageUrl, ...rest } = item;
-          return { link: imageUrl, ...rest };
-        });
-        setClothingItems(processedData);
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
