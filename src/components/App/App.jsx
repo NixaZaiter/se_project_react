@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -11,6 +11,7 @@ import {
   AddItemModal,
   ConfirmationModal,
 } from "../index";
+import LoadingPage from "../Loading/Loading";
 
 import {
   getWeather,
@@ -35,6 +36,7 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] =
     useState("fahrenheit");
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCardClick = (card) => {
     setActiveModal("preview-card");
@@ -66,38 +68,53 @@ function App() {
     setActiveModal("");
   };
 
-  const handleToggleSwitchChange = () => {
-    currentTemperatureUnit === "fahrenheit"
-      ? setCurrentTemperatureUnit("celsius")
-      : setCurrentTemperatureUnit("fahrenheit");
-  };
+  const handleToggleSwitchChange = useCallback(() => {
+    setCurrentTemperatureUnit((prev) =>
+      prev === "fahrenheit" ? "celsius" : "fahrenheit",
+    );
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ currentTemperatureUnit, handleToggleSwitchChange }),
+    [currentTemperatureUnit, handleToggleSwitchChange],
+  );
 
   // Add Clothes
   const onAddItem = (data) => {
     return addClothes(data)
       .then((data) => {
-        setClothingItems([...clothingItems, data]);
+        // use functional update to avoid stale closure
+        setClothingItems((prev) => [...prev, data]);
       })
       .catch(console.error);
   };
 
-  // Get Clothes
+  // Combined initial load: fetch clothes + weather, then hide loading
   useEffect(() => {
-    getClothes()
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch(console.error);
-  }, []);
-
-  // Get Weather
-  useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
+    let mounted = true;
+    const init = async () => {
+      setIsLoading(true);
+      try {
+        const [clothesData, weatherRaw] = await Promise.all([
+          getClothes(),
+          getWeather(coordinates, apiKey),
+        ]);
+        if (!mounted) return;
+        setClothingItems(clothesData || []);
+        const filteredData = filterWeatherData(weatherRaw);
         setWeatherData(filteredData);
-      })
-      .catch(console.error);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    };
+
+    init();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // Escape to close
@@ -117,19 +134,21 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
+      <CurrentTemperatureUnitContext.Provider value={contextValue}>
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Routes>
           <Route
             path="/"
             element={
-              <Main
-                weatherData={weatherData}
-                handleCardClick={handleCardClick}
-                clothingItems={clothingItems}
-              />
+              isLoading ? (
+                <LoadingPage />
+              ) : (
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              )
             }
           />
           <Route

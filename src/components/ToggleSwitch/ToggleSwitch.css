@@ -41,12 +41,12 @@
   z-index: 1;
 }
 
-.toggle-switch__temperature_farenheit {
+.toggle-switch__temperature_fahrenheit {
   left: 0;
   color: white;
 }
 
-.toggle-switch__temperature_celcius {
+.toggle-switch__temperature_celsius {
   right: 0;
   color: #00000080;
 }
@@ -64,10 +64,28 @@
   transform: translateX(-100%);
 }
 
-.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_farenheit {
+.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_fahrenheit {
   color: #00000080;
 }
 
-.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_celcius {
+.toggle-switch__checkbox:checked ~ .toggle-switch__temperature_celsius {
   color: white;
+}
+
+/* show a visible focus ring when the toggle (or any control inside it) is focused */
+.toggle-switch:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2); /* subtle blue ring */
+  border-radius: 999px;
+}
+
+/* also target the native checkbox focus (keyboard users) and highlight the circle */
+.toggle-switch__checkbox:focus-visible ~ .toggle-switch__circle {
+  box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.28);
+  border-radius: 999px;
+}
+
+/* small visual boost to the temperature labels when focused for extra affordance */
+.toggle-switch__checkbox:focus-visible ~ .toggle-switch__temperature {
+  filter: brightness(1.03);
 }
