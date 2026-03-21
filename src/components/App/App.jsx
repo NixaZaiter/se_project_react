@@ -27,6 +27,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 
 function App() {
   const [weatherData, setWeatherData] = useState({
+    city: "Unavailible", // <- default when coords not provided
     type: "",
     temp: { fahrenheit: 999, celsius: 999 },
     banner: "",
@@ -92,17 +93,62 @@ function App() {
   // Combined initial load: fetch clothes + weather, then hide loading
   useEffect(() => {
     let mounted = true;
+
     const init = async () => {
       setIsLoading(true);
       try {
-        const [clothesData, weatherRaw] = await Promise.all([
-          getClothes(),
-          getWeather(coordinates, apiKey),
+        // start clothes request immediately
+        const clothesPromise = getClothes();
+
+        // try to get browser geolocation with a timeout, fallback to hardcoded coordinates
+        const resolveCoords = () =>
+          new Promise((resolve) => {
+            // fallback if geolocation not supported
+            if (!("geolocation" in navigator)) {
+              resolve(coordinates);
+              return;
+            }
+
+            const timeout = setTimeout(() => {
+              // timeout -> fallback
+              resolve(coordinates);
+            }, 10000); // 10s timeout
+
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                clearTimeout(timeout);
+                resolve({
+                  latitude: pos.coords.latitude,
+                  longitude: pos.coords.longitude,
+                });
+              },
+              () => {
+                clearTimeout(timeout);
+                resolve(coordinates);
+              },
+              { timeout: 10000 },
+            );
+          });
+
+        const [clothesData, coordsForWeather] = await Promise.all([
+          clothesPromise,
+          resolveCoords(),
         ]);
+
         if (!mounted) return;
+
         setClothingItems(clothesData || []);
-        const filteredData = filterWeatherData(weatherRaw);
-        setWeatherData(filteredData);
+
+        // only fetch weather when we have coords
+        if (coordsForWeather && coordsForWeather.latitude != null) {
+          const weatherRaw = await getWeather(coordsForWeather, apiKey);
+          if (!mounted) return;
+          const filteredData = filterWeatherData(weatherRaw);
+          setWeatherData(filteredData);
+        } else {
+          // no coords available — set default city name and skip weather fetch
+          setWeatherData((prev) => ({ ...prev, city: "Unavailible" }));
+        }
       } catch (err) {
         console.error(err);
       } finally {
