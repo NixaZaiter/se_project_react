@@ -10,6 +10,7 @@ import {
   ItemModal,
   AddItemModal,
   ConfirmationModal,
+  LoginModal,
 } from "../index";
 import LoadingPage from "../Loading/Loading";
 
@@ -24,6 +25,7 @@ import {
 } from "../../utils/index";
 
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+// import { currentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -32,7 +34,7 @@ function App() {
     temp: { fahrenheit: 999, celsius: 999 },
     banner: "",
   });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("log-in");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] =
@@ -50,6 +52,10 @@ function App() {
 
   const openConfirmationModal = () => {
     setActiveModal("confirm-delete");
+  };
+
+  const handleLoginClick = () => {
+    setActiveModal("log-in");
   };
 
   const handleDeleteCard = (selectedCard) => {
@@ -137,7 +143,7 @@ function App() {
 
         if (!mounted) return;
 
-        setClothingItems(clothesData || []);
+        setClothingItems(clothesData.data || []);
 
         // only fetch weather when we have coords
         if (coordsForWeather && coordsForWeather.latitude != null) {
@@ -229,6 +235,11 @@ function App() {
           card={selectedCard}
           onClose={handleCloseModal}
           onDelete={handleDeleteCard}
+        />
+        <LoginModal
+          handleLoginClick={handleLoginClick}
+          isOpen={activeModal === "log-in"}
+          onClose={handleCloseModal}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>

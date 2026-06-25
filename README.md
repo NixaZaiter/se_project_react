@@ -16,9 +16,10 @@
 
     Continuing from the previous version, this is still mainly made using React. Navigation into subcomponents has been added to the logo, along with basic, local server interaction. Adding new clothes and seeing the entire list aside from just the recommended apparel is now implemented.
 
-### **GitHub Pages**
+### **GitHub Links**
 
 https://nixazaiter.github.io/se_project_react/
+Backend - https://github.com/NixaZaiter/se_project_express
 
 ## Project Pitch Video
 

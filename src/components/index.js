@@ -13,3 +13,4 @@ export { default as ToggleSwitch } from "./ToggleSwitch/ToggleSwitch";
 export { default as WeatherCard } from "./WeatherCard/WeatherCard";
 export { default as ConfirmationModal } from "./ConfirmationModal/ConfirmationModal";
 export { default as Loading } from "./Loading/Loading";
+export { default as LoginModal } from "./LoginModal/LoginModal";

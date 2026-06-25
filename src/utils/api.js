@@ -1,9 +1,7 @@
 import { handleServerResponse } from "./constants";
 
 const baseUrl = "http://localhost:3001";
-const headers = {
-  "Content-Type": "application/json",
-};
+const headers = { "Content-Type": "application/json" };
 
 export const getClothes = () => {
   return fetch(`${baseUrl}/items`, {
