@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import "./App.css";
+import "./styles/App.css";
 import {
   Header,
   Main,
@@ -11,8 +11,8 @@ import {
   AddItemModal,
   ConfirmationModal,
   LoginModal,
-} from "../index";
-import LoadingPage from "../Loading/Loading";
+} from "./index";
+import LoadingPage from "./Loading";
 
 import {
   getWeather,
@@ -22,9 +22,9 @@ import {
   getClothes,
   addClothes,
   removeClothes,
-} from "../../utils/index";
+} from "../utils/index";
 
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
 // import { currentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {

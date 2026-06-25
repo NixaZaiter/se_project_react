@@ -1,6 +1,6 @@
-import "./Profile.css";
+import "./styles/Profile.css";
 
-import { SideBar, ClothesSection } from "../index";
+import { SideBar, ClothesSection } from "./index";
 
 export default function Profile({
   handleCardClick,

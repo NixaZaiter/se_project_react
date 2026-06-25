@@ -39,3 +39,23 @@ export const validateAddItem = (vals) => {
 
   return next;
 };
+
+export const validateLogin = (vals) => {
+  const next = { email: "", password: "" };
+
+  const email = (vals.email || "").trim();
+  if (!email) {
+    next.email = "Email is required.";
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    next.email = "Email is invalid.";
+  }
+
+  const password = (vals.password || "").trim();
+  if (!password) {
+    next.password = "Password is required.";
+  } else if (password.length < 6) {
+    next.password = "Password must be at least 6 characters.";
+  }
+
+  return next;
+};

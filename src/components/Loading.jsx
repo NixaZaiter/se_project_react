@@ -1,6 +1,9 @@
-import "./Loading.css";
+import "./styles/Loading.css";
 
-export default function LoadingPage({ message = "Loading...", fullScreen = true }) {
+export default function LoadingPage({
+  message = "Loading...",
+  fullScreen = true,
+}) {
   return (
     <div
       className={`loading ${fullScreen ? "loading_fullscreen" : ""}`}

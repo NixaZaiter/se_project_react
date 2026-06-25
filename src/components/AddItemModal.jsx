@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import useForm from "../../hooks/useForm";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { validateAddItem } from "../../utils";
-import "./AddItemModal.css";
+import useForm from "../hooks/useForm";
+import ModalWithForm from "./ModalWithForm";
+import { validateAddItem } from "../utils";
+import "./styles/AddItemModal.css";
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
   const defaultValues = {
@@ -105,11 +105,15 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             aria-errormessage="name-error"
           />
         </label>
-        {errors.name && touched.name && (
-          <span id="name-error" className="modal__error modal__error-visible">
-            {errors.name}
-          </span>
-        )}
+        <span
+          style={{
+            visibility: errors.name && touched.name ? "visible" : "hidden",
+          }}
+          id="name-error"
+          className="modal__error"
+        >
+          {errors.name && touched.name ? `${errors.name}` : ""}
+        </span>
       </div>
 
       <div className="modal__field">
@@ -135,11 +139,16 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             aria-errormessage="image-error"
           />
         </label>
-        {errors.imageUrl && touched.imageUrl && (
-          <span id="image-error" className="modal__error modal__error-visible">
-            {errors.imageUrl}
-          </span>
-        )}
+        <span
+          style={{
+            visibility:
+              errors.imageUrl && touched.imageUrl ? "visible" : "hidden",
+          }}
+          id="image-error"
+          className="modal__error"
+        >
+          {errors.imageUrl && touched.imageUrl ? `${errors.imageUrl}` : ""}
+        </span>
       </div>
 
       <fieldset className="modal__radio-buttons" aria-describedby="radio-error">
@@ -186,11 +195,16 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           />
           {"Cold"}
         </label>
-        {errors.weather && touched.weather && (
-          <span id="radio-error" className="modal__error modal__error-visible">
-            {errors.weather}
-          </span>
-        )}
+        <span
+          style={{
+            visibility:
+              errors.weather && touched.weather ? "visible" : "hidden",
+          }}
+          id="radio-error"
+          className="modal__error"
+        >
+          {errors.weather && touched.weather ? `${errors.weather}` : ""}
+        </span>
       </fieldset>
     </ModalWithForm>
   );

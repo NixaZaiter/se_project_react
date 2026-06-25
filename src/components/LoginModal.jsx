@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useForm from "../../hooks/useForm";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { validateAddItem } from "../../utils";
+import useForm from "../hooks/useForm";
+import ModalWithForm from "./ModalWithForm";
+import { validateAddItem, validateLogin } from "../utils";
 
 const LoginModal = ({ isOpen, onAddItem, onClose }) => {
   const defaultValues = {
@@ -22,20 +22,15 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
   });
 
   useEffect(() => {
-    setErrors(validateAddItem(values));
+    setErrors(validateLogin(values));
   }, [values]);
 
-  // NOTE: removed auto-reset on modal close so fields persist until a successful submit.
-  // If you want to clear when modal opens, add logic that runs on open instead.
-
-  // wrapper so we can mark a field touched on change
   const handleFieldChange = (evt) => {
     const { name } = evt.target;
     handleChange(evt);
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  // mark touched on blur as well (useful if user leaves field)
   const handleBlur = (evt) => {
     const { name } = evt.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
@@ -43,7 +38,7 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
 
   const isValid =
     !errors.email &&
-    !errors.imageUrl &&
+    !errors.password &&
     values.email.trim() &&
     values.password.trim();
 
@@ -97,11 +92,15 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
             aria-errormessage="email-error"
           />
         </label>
-        {errors.email && touched.email && (
-          <span id="name-error" className="modal__error modal__error-visible">
-            {errors.email}
-          </span>
-        )}
+        <span
+          style={{
+            visibility: errors.email && touched.email ? "visible" : "hidden",
+          }}
+          id="email-error"
+          className="modal__error"
+        >
+          {errors.email && touched.email ? `${errors.email}` : ""}
+        </span>
       </div>
 
       <div className="modal__field">
@@ -127,14 +126,16 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
             aria-errormessage="password-error"
           />
         </label>
-        {errors.password && touched.password && (
-          <span
-            id="password-error"
-            className="modal__error modal__error-visible"
-          >
-            {errors.password}
-          </span>
-        )}
+        <span
+          style={{
+            visibility:
+              errors.password && touched.password ? "visible" : "hidden",
+          }}
+          id="password-error"
+          className="modal__error "
+        >
+          {errors.password && touched.password ? `${errors.password}` : ""}
+        </span>
       </div>
     </ModalWithForm>
   );

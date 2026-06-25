@@ -1,5 +1,5 @@
-import "./ClothesSection.css";
-import { ItemCard } from "../index";
+import "./styles/ClothesSection.css";
+import { ItemCard } from "./index";
 
 export default function ClothesSection({
   handleCardClick,

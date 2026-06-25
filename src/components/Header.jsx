@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import "./Header.css";
-import logo from "../../assets/logo.svg";
-import avatarDefault from "../../assets/avatar.svg";
+import "./styles/Header.css";
+import logo from "../assets/logo.svg";
+import avatarDefault from "../assets/avatar.svg";
 
-import { ToggleSwitch } from "../index";
+import { ToggleSwitch } from "./index";
 
 export default function Header({ handleAddClick, weatherData }) {
   const username = "Terrence Tegegne";

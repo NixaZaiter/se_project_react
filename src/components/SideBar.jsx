@@ -1,5 +1,5 @@
-import "./SideBar.css";
-import avatarDefault from "../../assets/avatar.svg";
+import "./styles/SideBar.css";
+import avatarDefault from "../assets/avatar.svg";
 
 export default function SideBar() {
   const username = "Terrence Tegegne";

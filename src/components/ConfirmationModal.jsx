@@ -1,5 +1,5 @@
-import "./ConfirmationModal.css";
-import closeIcon from "../../assets/close-icon-dark.svg";
+import "./styles/ConfirmationModal.css";
+import closeIcon from "../assets/close-icon-dark.svg";
 
 export default function ConfirmationModal({ isOpen, card, onClose, onDelete }) {
   const handleDelete = () => {

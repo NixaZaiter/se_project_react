@@ -1,5 +1,5 @@
-import "./ModalWithForm.css";
-import closeIcon from "../../assets/close-icon-dark.svg";
+import "./styles/ModalWithForm.css";
+import closeIcon from "../assets/close-icon-dark.svg";
 import { useEffect, useRef } from "react";
 
 export default function ModalWithForm({
@@ -10,7 +10,7 @@ export default function ModalWithForm({
   name,
   onClose,
   onSubmit,
-  isValid = false, // changed default prop to false
+  isValid = false,
 }) {
   const containerRef = useRef(null);
   const lastActiveRef = useRef(null);
@@ -20,7 +20,7 @@ export default function ModalWithForm({
       lastActiveRef.current = document.activeElement;
       // focus first focusable inside modal
       const focusable = containerRef.current?.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        "button, [href], input, select, textarea",
       );
       focusable?.focus();
       document.body.style.overflow = "hidden";
@@ -34,16 +34,11 @@ export default function ModalWithForm({
     <div
       onClick={onClose}
       className={`modal modal_type_${name} ${isOpen ? "modal_is-open" : ""}`}
-      role="presentation"
     >
       <div
         ref={containerRef}
         onClick={(e) => e.stopPropagation()}
         className="modal__container"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={`modal-title-${name}`}
-        tabIndex={-1}
       >
         <h2 id={`modal-title-${name}`} className="modal__title">
           {title}
@@ -68,7 +63,6 @@ export default function ModalWithForm({
                 !isValid ? "modal__save-btn_disabled" : ""
               }`}
               disabled={!isValid}
-              aria-disabled={!isValid}
             >
               {buttonText}
             </button>
