@@ -1,0 +1,48 @@
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #222;
+  font-size: 16px;
+  line-height: 1;
+  padding: 12px;
+}
+
+.loading_fullscreen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffffffee;
+  z-index: 9999;
+}
+
+.loading__spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.12);
+  border-top-color: #000;
+  animation: loading-spin 1s linear infinite;
+}
+
+.loading__message {
+  margin: 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* subtle reduced size for inline usage */
+.loading:not(.loading_fullscreen) .loading__spinner {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

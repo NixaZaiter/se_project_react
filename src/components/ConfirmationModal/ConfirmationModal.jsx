@@ -16,7 +16,7 @@ export default function ConfirmationModal({ isOpen, card, onClose, onDelete }) {
         </button>
         <p className="modal__text">
           Are you sure you want to delete this item? <br />
-          This action isirreversible.
+          This action is irreversible.
         </p>
         <button
           onClick={handleDelete}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -11,6 +11,7 @@ import {
   AddItemModal,
   ConfirmationModal,
 } from "../index";
+import LoadingPage from "../Loading/Loading";
 
 import {
   getWeather,
@@ -26,6 +27,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 
 function App() {
   const [weatherData, setWeatherData] = useState({
+    city: "Unavailible", // <- default when coords not provided
     type: "",
     temp: { fahrenheit: 999, celsius: 999 },
     banner: "",
@@ -35,6 +37,7 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] =
     useState("fahrenheit");
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCardClick = (card) => {
     setActiveModal("preview-card");
@@ -66,38 +69,98 @@ function App() {
     setActiveModal("");
   };
 
-  const handleToggleSwitchChange = () => {
-    currentTemperatureUnit === "fahrenheit"
-      ? setCurrentTemperatureUnit("celsius")
-      : setCurrentTemperatureUnit("fahrenheit");
-  };
+  const handleToggleSwitchChange = useCallback(() => {
+    setCurrentTemperatureUnit((prev) =>
+      prev === "fahrenheit" ? "celsius" : "fahrenheit",
+    );
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ currentTemperatureUnit, handleToggleSwitchChange }),
+    [currentTemperatureUnit, handleToggleSwitchChange],
+  );
 
   // Add Clothes
   const onAddItem = (data) => {
     return addClothes(data)
       .then((data) => {
-        setClothingItems([...clothingItems, data]);
+        // use functional update to avoid stale closure
+        setClothingItems((prev) => [...prev, data]);
       })
       .catch(console.error);
   };
 
-  // Get Clothes
+  // Combined initial load: fetch clothes + weather, then hide loading
   useEffect(() => {
-    getClothes()
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch(console.error);
-  }, []);
+    let mounted = true;
 
-  // Get Weather
-  useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
+    const init = async () => {
+      setIsLoading(true);
+      try {
+        // start clothes request immediately
+        const clothesPromise = getClothes();
+
+        // try to get browser geolocation with a timeout, fallback to hardcoded coordinates
+        const resolveCoords = () =>
+          new Promise((resolve) => {
+            // fallback if geolocation not supported
+            if (!("geolocation" in navigator)) {
+              resolve(coordinates);
+              return;
+            }
+
+            const timeout = setTimeout(() => {
+              // timeout -> fallback
+              resolve(coordinates);
+            }, 10000); // 10s timeout
+
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                clearTimeout(timeout);
+                resolve({
+                  latitude: pos.coords.latitude,
+                  longitude: pos.coords.longitude,
+                });
+              },
+              () => {
+                clearTimeout(timeout);
+                resolve(coordinates);
+              },
+              { timeout: 10000 },
+            );
+          });
+
+        const [clothesData, coordsForWeather] = await Promise.all([
+          clothesPromise,
+          resolveCoords(),
+        ]);
+
+        if (!mounted) return;
+
+        setClothingItems(clothesData || []);
+
+        // only fetch weather when we have coords
+        if (coordsForWeather && coordsForWeather.latitude != null) {
+          const weatherRaw = await getWeather(coordsForWeather, apiKey);
+          if (!mounted) return;
+          const filteredData = filterWeatherData(weatherRaw);
+          setWeatherData(filteredData);
+        } else {
+          // no coords available — set default city name and skip weather fetch
+          setWeatherData((prev) => ({ ...prev, city: "Unavailible" }));
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    };
+
+    init();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // Escape to close
@@ -117,19 +180,21 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
+      <CurrentTemperatureUnitContext.Provider value={contextValue}>
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Routes>
           <Route
             path="/"
             element={
-              <Main
-                weatherData={weatherData}
-                handleCardClick={handleCardClick}
-                clothingItems={clothingItems}
-              />
+              isLoading ? (
+                <LoadingPage />
+              ) : (
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              )
             }
           />
           <Route
