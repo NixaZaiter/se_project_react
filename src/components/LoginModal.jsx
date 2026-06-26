@@ -5,7 +5,7 @@ import { validateLogin } from "../utils";
 
 const LoginModal = ({
   isOpen,
-  onLogin,
+  handleLogin,
   onClose,
   setIsLoggedIn,
   handleRegisterClick,
@@ -58,7 +58,7 @@ const LoginModal = ({
       return;
     }
 
-    onLogin(values)
+    handleLogin(values)
       .then(() => {
         setIsLoggedIn(true);
         setValues(defaultValues);

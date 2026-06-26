@@ -11,20 +11,26 @@ export const getClothes = () => {
   });
 };
 
-export const addClothes = ({ name, imageUrl, weather }) => {
+export const addClothes = ({ name, imageUrl, weather }, token) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
-    headers: headers,
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then((res) => {
     return handleServerResponse(res);
   });
 };
 
-export const removeClothes = (id) => {
+export const removeClothes = (id, token) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-    headers: headers,
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
   }).then((res) => {
     return handleServerResponse(res);
   });

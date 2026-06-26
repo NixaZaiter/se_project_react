@@ -5,7 +5,7 @@ import { validateSignup } from "../utils";
 
 const RegisterModal = ({
   isOpen,
-  onSignup,
+  handleSignup,
   onClose,
   setIsLoggedIn,
   handleLoginClick,
@@ -67,7 +67,7 @@ const RegisterModal = ({
       return;
     }
 
-    onSignup(values)
+    handleSignup(values)
       .then(() => {
         setIsLoggedIn(true);
         setValues(defaultValues);

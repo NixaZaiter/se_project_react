@@ -1,2 +1,2 @@
-// export { default as CurrentUserContext } from "./CurrentUserContext";
+export * from "./CurrentUserContext";
 export * from "./CurrentTemperatureUnitContext";
