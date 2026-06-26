@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import ModalWithForm from "./ModalWithForm";
-import { validateAddItem, validateLogin } from "../utils";
+import { validateLogin } from "../utils";
 
-const LoginModal = ({ isOpen, onAddItem, onClose }) => {
+const LoginModal = ({
+  isOpen,
+  onLogin,
+  onClose,
+  setIsLoggedIn,
+  handleRegisterClick,
+}) => {
   const defaultValues = {
     email: "",
     password: "",
   };
+
   const { values, handleChange, setValues } = useForm(defaultValues);
 
   const [errors, setErrors] = useState({
@@ -15,7 +22,6 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
     password: "",
   });
 
-  // track which fields were interacted with
   const [touched, setTouched] = useState({
     email: false,
     password: false,
@@ -44,18 +50,17 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const nextErrors = validateAddItem(values);
+    const nextErrors = validateLogin(values);
     setErrors(nextErrors);
 
     if (!Object.values(nextErrors).every((e) => !e)) {
-      // mark all fields touched so errors become visible after submit attempt
       setTouched({ email: true, password: true });
       return;
     }
 
-    onAddItem(values)
+    onLogin(values)
       .then(() => {
-        // reset only after successful submit
+        setIsLoggedIn(true);
         setValues(defaultValues);
         setTouched({ email: false, password: false });
         onClose(evt);
@@ -65,13 +70,12 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
 
   return (
     <ModalWithForm
-      buttonText={"Log In"}
       title={"Log in"}
       name="log-in"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      isValid={isValid} // pass validity to ModalWithForm
+      isValid={isValid}
     >
       <div className="modal__field">
         <label className="modal__label" htmlFor="email">
@@ -88,15 +92,12 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
             onChange={handleFieldChange}
             onBlur={handleBlur}
             value={values.email}
-            aria-invalid={touched.email && !!errors.email}
-            aria-errormessage="email-error"
           />
         </label>
         <span
           style={{
             visibility: errors.email && touched.email ? "visible" : "hidden",
           }}
-          id="email-error"
           className="modal__error"
         >
           {errors.email && touched.email ? `${errors.email}` : ""}
@@ -122,8 +123,6 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
             onChange={handleFieldChange}
             onBlur={handleBlur}
             value={values.password}
-            aria-invalid={touched.password && !!errors.password}
-            aria-errormessage="password-error"
           />
         </label>
         <span
@@ -131,11 +130,32 @@ const LoginModal = ({ isOpen, onAddItem, onClose }) => {
             visibility:
               errors.password && touched.password ? "visible" : "hidden",
           }}
-          id="password-error"
           className="modal__error "
         >
           {errors.password && touched.password ? `${errors.password}` : ""}
         </span>
+      </div>
+      <div className="modal__field">
+        <button
+          id="form-login-btn"
+          type="submit"
+          className={`modal__save-btn ${
+            !isValid ? "modal__save-btn_disabled" : ""
+          }`}
+          disabled={!isValid}
+          onSubmit={handleSubmit}
+        >
+          Log In
+        </button>
+
+        <button
+          id="form-signup-btn"
+          type="button"
+          className="modal__save-btn modal__save-btn_type_secondary"
+          onClick={handleRegisterClick}
+        >
+          or Sign Up
+        </button>
       </div>
     </ModalWithForm>
   );

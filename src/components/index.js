@@ -14,3 +14,5 @@ export { default as WeatherCard } from "./WeatherCard";
 export { default as ConfirmationModal } from "./ConfirmationModal";
 export { default as Loading } from "./Loading";
 export { default as LoginModal } from "./LoginModal";
+export { default as RegisterModal } from "./RegisterModal";
+export { default as ProtectedRoute } from "./ProtectedRoute";

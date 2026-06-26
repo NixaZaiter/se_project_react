@@ -1,31 +1,42 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
+// Styles
 import "./styles/App.css";
+
+// Components
 import {
-  Header,
-  Main,
-  Profile,
-  Footer,
-  ItemModal,
   AddItemModal,
   ConfirmationModal,
+  Footer,
+  Header,
+  ItemModal,
+  Loading,
   LoginModal,
+  Main,
+  Profile,
+  ProtectedRoute,
+  RegisterModal,
 } from "./index";
-import LoadingPage from "./Loading";
 
+// Utils
 import {
-  getWeather,
-  filterWeatherData,
-  coordinates,
-  apiKey,
-  getClothes,
   addClothes,
+  apiKey,
+  coordinates,
+  filterWeatherData,
+  getClothes,
+  getWeather,
+  loginRequest,
   removeClothes,
+  signupRequest,
 } from "../utils/index";
 
-import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
-// import { currentUserContext } from "../../contexts/CurrentUserContext";
+// Contexts
+import {
+  CurrentTemperatureUnitContext,
+  // CurrentUserContext,
+} from "../contexts/index";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -34,12 +45,13 @@ function App() {
     temp: { fahrenheit: 999, celsius: 999 },
     banner: "",
   });
-  const [activeModal, setActiveModal] = useState("log-in");
+  const [activeModal, setActiveModal] = useState("login");
   const [selectedCard, setSelectedCard] = useState({ _id: "" });
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] =
     useState("fahrenheit");
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleCardClick = (card) => {
     setActiveModal("preview-card");
@@ -55,7 +67,11 @@ function App() {
   };
 
   const handleLoginClick = () => {
-    setActiveModal("log-in");
+    setActiveModal("login");
+  };
+
+  const handleRegisterClick = () => {
+    setActiveModal("signup");
   };
 
   const handleDeleteCard = (selectedCard) => {
@@ -94,6 +110,14 @@ function App() {
         setClothingItems((prev) => [...prev, data]);
       })
       .catch(console.error);
+  };
+
+  const onSignup = (data) => {
+    return signupRequest(data);
+  };
+
+  const onLogin = (data) => {
+    return loginRequest(data);
   };
 
   // Combined initial load: fetch clothes + weather, then hide loading
@@ -185,6 +209,7 @@ function App() {
   }, [activeModal]);
 
   return (
+    // <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
       <CurrentTemperatureUnitContext.Provider value={contextValue}>
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
@@ -193,7 +218,7 @@ function App() {
             path="/"
             element={
               isLoading ? (
-                <LoadingPage />
+                <Loading />
               ) : (
                 <Main
                   weatherData={weatherData}
@@ -206,11 +231,19 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile
-                handleCardClick={handleCardClick}
-                clothingItems={clothingItems}
-                handleAddClick={handleAddClick}
-              />
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <Profile
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />
             }
           />
         </Routes>
@@ -237,12 +270,22 @@ function App() {
           onDelete={handleDeleteCard}
         />
         <LoginModal
-          handleLoginClick={handleLoginClick}
-          isOpen={activeModal === "log-in"}
+          handleRegisterClick={handleRegisterClick}
+          isOpen={activeModal === "login"}
+          onLogin={onLogin}
           onClose={handleCloseModal}
+          setIsLoggedIn={setIsLoggedIn}
+        />
+        <RegisterModal
+          handleLoginClick={handleLoginClick}
+          isOpen={activeModal === "signup"}
+          onSignup={onSignup}
+          onClose={handleCloseModal}
+          setIsLoggedIn={setIsLoggedIn}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>
+    // </CurrentUserContext.Provider>
   );
 }
 

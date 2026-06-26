@@ -3,11 +3,11 @@ import { handleServerResponse } from "./constants";
 const baseUrl = "http://localhost:3001";
 const headers = { "Content-Type": "application/json" };
 
-export const signupRequest = ({ name, avatar, email, password }) => {
+export const signupRequest = ({ email, password, name, avatarURL: avatar }) => {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: headers,
-    body: JSON.stringify({ name, avatar, email, password }),
+    body: JSON.stringify({ email, password, name, avatar }),
   }).then((res) => {
     return handleServerResponse(res);
   });

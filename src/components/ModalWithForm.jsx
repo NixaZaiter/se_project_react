@@ -55,18 +55,20 @@ export default function ModalWithForm({
         >
           {children}
           {/* Save btn */}
-          <div className="modal__field">
-            <button
-              id="form-save-btn"
-              type="submit"
-              className={`modal__save-btn ${
-                !isValid ? "modal__save-btn_disabled" : ""
-              }`}
-              disabled={!isValid}
-            >
-              {buttonText}
-            </button>
-          </div>
+          {buttonText && (
+            <div className="modal__field">
+              <button
+                id="form-save-btn"
+                type="submit"
+                className={`modal__save-btn ${
+                  !isValid ? "modal__save-btn_disabled" : ""
+                }`}
+                disabled={!isValid}
+              >
+                {buttonText}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>

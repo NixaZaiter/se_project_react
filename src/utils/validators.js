@@ -53,8 +53,48 @@ export const validateLogin = (vals) => {
   const password = (vals.password || "").trim();
   if (!password) {
     next.password = "Password is required.";
+  }
+  return next;
+};
+
+export const validateSignup = (vals) => {
+  const next = { email: "", password: "", name: "", avatarURL: "" };
+
+  const email = (vals.email || "").trim();
+  if (!email) {
+    next.email = "Email is required.";
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    next.email = "Email is invalid.";
+  }
+
+  const password = (vals.password || "").trim();
+  if (!password) {
+    next.password = "Password is required.";
   } else if (password.length < 6) {
     next.password = "Password must be at least 6 characters.";
+  }
+
+  const name = (vals.name || "").trim();
+  if (!name) {
+    next.name = "Name is required.";
+  } else if (name.length < 2) {
+    next.name = "Name must be at least 2 characters.";
+  } else if (name.length > 100) {
+    next.name = "Name must be 100 characters or less.";
+  }
+  // must also check if valid image format
+  const avatar = (vals.avatarURL || "").trim();
+  if (!avatar) {
+    next.avatarURL = "Avatar URL is required.";
+  } else if (!/\S+\.\S+/.test(avatar)) {
+    next.avatarURL = "Avatar URL is invalid.";
+  } else {
+    const validImageFormats = ["jpg", "jpeg", "png", "gif", "webp", "svg"];
+    const avatarExtension = avatar.split(".").pop();
+    if (!validImageFormats.includes(avatarExtension)) {
+      next.avatarURL =
+        "Avatar URL must be a valid image format (jpg, jpeg, png, gif, webp, svg).";
+    }
   }
 
   return next;

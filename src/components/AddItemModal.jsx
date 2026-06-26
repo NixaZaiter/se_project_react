@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import ModalWithForm from "./ModalWithForm";
 import { validateAddItem } from "../utils";
-import "./styles/AddItemModal.css";
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
   const defaultValues = {

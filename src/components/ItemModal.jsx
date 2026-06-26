@@ -1,4 +1,3 @@
-import "./styles/ItemModal.css";
 import closeIcon from "../assets/close-icon-dark.svg";
 
 export default function ItemModal({

@@ -149,6 +149,18 @@
   pointer-events: none;
 }
 
+.modal__save-btn_type_secondary {
+  color: #00000080;
+  background: none;
+}
+
+.modal__save-btn_type_secondary:hover,
+.modal__save-btn_type_secondary:not(:disabled):hover {
+  color: #000;
+  background: none;
+  cursor: pointer;
+}
+
 /* Error input styling */
 .modal__input_type_error {
   border-color: #ff000099;
