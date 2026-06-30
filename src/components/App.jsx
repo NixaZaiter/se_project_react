@@ -238,7 +238,13 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <CurrentTemperatureUnitContext.Provider value={contextValue}>
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleLoginClick={handleLoginClick}
+            handleRegisterClick={handleRegisterClick}
+            handleAddClick={handleAddClick}
+            weatherData={weatherData}
+            isLoggedIn={isLoggedIn}
+          />
           <Routes>
             <Route
               path="/"

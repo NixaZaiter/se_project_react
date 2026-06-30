@@ -1,9 +1,12 @@
 import "./styles/SideBar.css";
 import avatarDefault from "../assets/avatar.svg";
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts";
 
 export default function SideBar() {
-  const username = "Terrence Tegegne";
-  const avatar = avatarDefault;
+  const currentUser = useContext(CurrentUserContext);
+  const username = currentUser.name;
+  const avatar = currentUser.avatarURL;
 
   return (
     <aside className="sidebar">

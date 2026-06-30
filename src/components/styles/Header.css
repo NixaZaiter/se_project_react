@@ -29,6 +29,21 @@
   line-height: 100%;
 }
 
+.header__btn {
+  border: 0;
+  background: none;
+  padding: 0;
+  max-height: 24px;
+  font-weight: 700;
+}
+
+.header__btn:hover {
+  color: #555;
+  cursor: pointer;
+}
+.header__signup-btn {
+  margin-right: 20px;
+}
 .header__add-clothes-btn {
   border: 0;
   background: none;
@@ -46,7 +61,8 @@
   margin-left: 12px;
   height: 40px;
   width: 40px;
-  box-sizing: border-box;
+  border: 1px solid #00000080;
+  border-radius: 50%;
 }
 
 .header__avatar_none {
