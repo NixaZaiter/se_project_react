@@ -175,7 +175,7 @@
 }
 
 .modal__img {
-  object-fit: fill;
+  object-fit: contain;
   height: 498px;
 }
 
