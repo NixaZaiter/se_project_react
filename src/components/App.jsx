@@ -56,6 +56,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({
     name: "",
     avatarURL: "",
+    _id: "",
   });
 
   const handleCardClick = (card) => {
@@ -80,7 +81,8 @@ function App() {
   };
 
   const handleDeleteCard = (selectedCard) => {
-    removeClothes(selectedCard._id)
+    const token = localStorage.getItem("jwt");
+    removeClothes(selectedCard._id, token)
       .then(() => {
         const filteredClothes = clothingItems.filter(
           (item) => item._id !== selectedCard._id,
@@ -109,9 +111,11 @@ function App() {
 
   // Add Clothes
   const onAddItem = (data) => {
-    return addClothes(data)
-      .then((data) => {
+    const token = localStorage.getItem("jwt");
+    return addClothes(data, token)
+      .then(({ data }) => {
         // use functional update to avoid stale closure
+        console.log(data);
         setClothingItems((prev) => [...prev, data]);
       })
       .catch(console.error);
@@ -122,12 +126,24 @@ function App() {
   };
 
   const handleLogin = (data) => {
-    return loginRequest(data).then((res) => {
-      if (res.token) {
-        localStorage.setItem("jwt", res.token);
-        setIsLoggedIn(true);
-      }
-    });
+    return loginRequest(data)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          tokenCheck(res.token)
+            .then(({ data }) => {
+              setCurrentUser({
+                name: data.name,
+                avatarURL: data.avatar,
+                _id: data._id,
+              });
+              setIsLoggedIn(true);
+            })
+            .catch(console.error);
+          setIsLoggedIn(true);
+        }
+      })
+      .catch(console.error);
   };
 
   // Combined initial load: fetch clothes + weather, then hide loading
@@ -225,14 +241,15 @@ function App() {
     }
     tokenCheck(token)
       .then(({ data }) => {
-        setCurrentUser({ name: data.name, avatarURL: data.avatar });
+        setCurrentUser({
+          name: data.name,
+          avatarURL: data.avatar,
+          _id: data._id,
+        });
         setIsLoggedIn(true);
       })
       .catch(console.error);
   }, []);
-
-  console.log(currentUser);
-  console.log(isLoggedIn);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
