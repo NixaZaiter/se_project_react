@@ -149,12 +149,23 @@ function App() {
   // Combined initial load: fetch clothes + weather, then hide loading
   useEffect(() => {
     let mounted = true;
+    const token = localStorage.getItem("jwt");
 
     const init = async () => {
       setIsLoading(true);
       try {
         // start clothes request immediately
         const clothesPromise = getClothes();
+        const tokenPromise = tokenCheck(token)
+          .then(({ data }) => {
+            setCurrentUser({
+              name: data.name,
+              avatarURL: data.avatar,
+              _id: data._id,
+            });
+            setIsLoggedIn(true);
+          })
+          .catch(console.error);
 
         // try to get browser geolocation with a timeout, fallback to hardcoded coordinates
         const resolveCoords = () =>
@@ -189,6 +200,7 @@ function App() {
         const [clothesData, coordsForWeather] = await Promise.all([
           clothesPromise,
           resolveCoords(),
+          tokenPromise,
         ]);
 
         if (!mounted) return;
@@ -233,23 +245,6 @@ function App() {
       document.removeEventListener("keydown", handleKeydown);
     };
   }, [activeModal]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
-      return;
-    }
-    tokenCheck(token)
-      .then(({ data }) => {
-        setCurrentUser({
-          name: data.name,
-          avatarURL: data.avatar,
-          _id: data._id,
-        });
-        setIsLoggedIn(true);
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
