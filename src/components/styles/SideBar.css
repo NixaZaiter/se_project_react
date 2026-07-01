@@ -3,6 +3,9 @@
   max-width: 345px;
   width: 100%;
   justify-items: flex-start;
+  flex-direction: column;
+  flex: 1;
+  padding: 19px 40px;
 }
 
 .sidebar__profile {
@@ -10,7 +13,6 @@
   gap: 16px;
   height: fit-content;
   align-items: center;
-  flex-direction: row-reverse;
 }
 
 .sidebar__avatar {
@@ -35,4 +37,35 @@
 
 .sidebar__user-name {
   margin: 0;
+}
+
+.sidebar__container {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  flex-direction: column;
+  align-items: start;
+}
+
+.sidebar__btn {
+  border: 0;
+  background: none;
+  padding: 0;
+  max-height: 24px;
+  font-weight: 700;
+}
+
+.sidebar__btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 430px) {
+  .sidebar {
+    visibility: collapse;
+    padding: 0;
+    margin: 0;
+    width: 40px;
+    flex: 0;
+  }
 }

@@ -46,3 +46,9 @@
   text-overflow: ellipsis;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 767px) {
+  .item-card {
+    aspect-ratio: 1;
+  }
+}

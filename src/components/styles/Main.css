@@ -19,30 +19,13 @@
 
 .cards__list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fit, 323px);
+  grid-template-rows: repeat(auto-fill, 326px);
   justify-self: center;
   list-style: none;
   margin: 0;
   padding: 0;
   gap: 20px;
-}
-
-@media screen and (max-width: 1439px) {
-  .cards__list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .cards__list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .cards__list {
-    justify-self: center;
-    grid-template-columns: repeat(1, 1fr);
-  }
+  width: 100%;
+  justify-content: center;
 }

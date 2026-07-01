@@ -1,5 +1,6 @@
 .clothes-section {
   height: fit-content;
+  flex: 1;
 }
 
 .clothes-section__row {
@@ -36,30 +37,25 @@
 
 .clothes-section__list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fit, 325px);
+  grid-template-rows: repeat(auto-fill, 328px);
   justify-self: center;
   list-style: none;
   margin: 0;
   padding: 0;
   gap: 20px;
-}
-
-@media screen and (max-width: 1439px) {
-  .clothes-section__list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .clothes-section__list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  width: 100%;
 }
 
 @media screen and (max-width: 767px) {
   .clothes-section__list {
     justify-self: center;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+  }
+}
+@media screen and (max-width: 430px) {
+  .clothes-section__row {
+    justify-content: space-between;
   }
 }
