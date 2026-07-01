@@ -11,7 +11,6 @@ export default function SideBar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__profile">
-        <div className="sidebar__user-name">{username}</div>
         {avatar ? (
           <img
             src={avatar || avatarDefault}
@@ -23,6 +22,15 @@ export default function SideBar() {
             {username?.toUpperCase().charAt(0) || ""}
           </span>
         )}
+        <div className="sidebar__user-name">{username}</div>
+      </div>
+      <div className="sidebar__container">
+        <button className="sidebar__btn sidebar__btn_type_edit">
+          Change profile data
+        </button>
+        <button className="sidebar__btn sidebar__btn_type_logout">
+          Log Out
+        </button>
       </div>
     </aside>
   );
