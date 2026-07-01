@@ -280,7 +280,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <ProtectedRoute isLoggedIn={isLoggedIn} isLoading={isLoading}>
                   <Profile
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
@@ -289,16 +289,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="*"
-              element={
-                isLoggedIn ? (
-                  <Navigate to="/" replace />
-                ) : (
-                  <Navigate to="/signin" replace />
-                )
-              }
-            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
 
           <Footer />
